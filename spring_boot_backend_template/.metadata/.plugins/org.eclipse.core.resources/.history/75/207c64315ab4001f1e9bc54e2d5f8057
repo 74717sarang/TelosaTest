@@ -1,0 +1,88 @@
+package com.app.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.entity.ToDoList;
+
+import lombok.Delegate;
+
+@RestController
+@RequestMapping("/ToDo")
+public class TodoController {
+
+	private ArrayList<ToDoList> todoList = new ArrayList<>();
+
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("todos", todoList);
+
+		return "index";
+	}
+
+	@PostMapping("/addTodo")
+	public String adddTodoList(Model model) {
+		model.addAllAttributes(todoList);
+		ToDoList obj = new ToDoList();
+		obj.setTodoId(1);
+		obj.setName("testName");
+		obj.setCompleted(true);
+		obj.setIncomplete(false);
+
+		if (obj == null) {
+			System.out.println("Model is Null...");
+
+		}
+		todoList.add(obj);
+
+		return "redirct:/ "; // home page
+	}
+
+	@DeleteMapping("/delete")
+	public void deleteTodo(@PathVariable long id) {
+		todoList.removeIf(i -> i.getTodoId() == id); // remove maching id
+
+	}
+
+	@PutMapping("/ChangeStatus")
+	public String changeTodo(@RequestParam long id, Boolean no) {
+		for (ToDoList todo : todoList) {
+			if (todo.getTodoId() == id) {
+				todo.setCompleted(no);
+				break; // change is done
+
+			}
+		}
+		return "redirect:/"; // home page
+	}
+	
+	
+	
+	@PutMapping("/Changname")
+	public String changeTodoName(@RequestParam long id, String name) {
+		for (ToDoList todo : todoList) {
+			if (todo.getTodoId() == id) {
+				todo.setName(name);
+				break; // Name change is done
+
+			}
+		}
+		return "redirect:/"; // home page
+	}
+	
+	
+	@GetMapping("/delete")
+	public void getIncomplete() {
+		todoList 
+
+	}
+}
