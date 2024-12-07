@@ -1,0 +1,68 @@
+package com.app.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.entity.ToDoList;
+
+@RestController
+@RequestMapping("/ToDo")
+public class TodoController {
+
+	private ArrayList<ToDoList> todoList = new ArrayList<>();
+
+	@GetMapping("/")
+	public String index(Model model) {
+		model.addAttribute("todos", todoList);
+
+		return "index";
+	}
+
+	@PostMapping("/addTodo")
+	public String adddTodoList(Model model) {
+		model.addAllAttributes(todoList);
+		ToDoList obj = new ToDoList();
+		obj.setTodoId(1);
+		obj.setName("testName");
+		obj.setCompleted(10);
+		obj.setIncomplete(5);
+
+		if (obj == null) {
+			System.out.println("Model is Null...");
+
+		}
+		todoList.add(obj);
+
+		return "redirct:/ "; // home page
+	}
+
+	@GetMapping("/delete")
+	public void deleteTodo(@PathVariable long id) {
+		todoList.removeIf(i -> i.getTodoId() == id); // remove maching id
+
+	}
+
+	@PostMapping("/ChangeStatus")
+	public String changeTodo(@RequestParam long id, int no) {
+		for (ToDoList todo : todoList) {
+			if (todo.getTodoId() == id) {
+				todo.setCompleted(no);
+				break; // change is done
+
+			}
+		}
+		return "redirect:/"; // home page
+	}
+	
+	
+	
+	public 
+
+}

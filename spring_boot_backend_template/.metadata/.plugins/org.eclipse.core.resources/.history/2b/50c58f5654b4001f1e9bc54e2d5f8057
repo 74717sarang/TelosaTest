@@ -1,0 +1,84 @@
+package com.app.entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@Table(name="todsList")
+public class ToDoList {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO) 
+	private long todoId;
+	@Column(name="name")
+	private String name;
+	private int completed;
+	private int incomplete;
+	private LocalDate date;
+	
+	
+	public ToDoList() {
+		
+	}
+	
+
+	
+	public ToDoList(long todoId, String name, int completed, int incomplete, LocalDate date) {
+		super();
+		this.todoId = todoId;
+		this.name = name;
+		this.completed = completed;
+		this.incomplete = incomplete;
+		this.date = date;
+	}
+	public long getTodoId() {
+		return todoId;
+	}
+	public void setTodoId(long todoId) {
+		this.todoId = todoId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getCompleted() {
+		return completed;
+	}
+	public void setCompleted(int completed) {
+		this.completed = completed;
+	}
+	public int getIncomplete() {
+		return incomplete;
+	}
+	public void setIncomplete(int incomplete) {
+		this.incomplete = incomplete;
+	}
+	public LocalDate getDate() {
+		return date;
+	}
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+	
+	
+	
+}
